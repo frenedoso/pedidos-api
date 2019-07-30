@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.rest.pedidosapi.model.Cliente;
+import com.rest.pedidosapi.model.ItemPedido;
 import com.rest.pedidosapi.model.Pedido;
 import com.rest.pedidosapi.repository.PedidoRepository;
 
@@ -25,14 +26,23 @@ public class PedidoService {
 		return pedidoRepository.findAll();
 	}
 	
-	public Pedido salvaPedido(Pedido pedido) throws Exception {
+	public Pedido salvaPedido(Pedido pedido) throws RuntimeException {
 		
 		Optional<Cliente> cliente = clienteService.getClienteById(pedido.getCliente().getId()); 
 		if (!cliente.isPresent()) {
-			throw new Exception(CLIENTE_NAO_ENCONTRADO);
+			throw new RuntimeException(CLIENTE_NAO_ENCONTRADO);
 		}
 		pedido.setCliente(cliente.get());
 		pedidoRepository.save(pedido);
 		return pedido;
+	}
+
+	public List<ItemPedido> getPedidoItens(long pedidoId) {
+		Optional<Pedido> pedido = pedidoRepository.findById(pedidoId);
+		if (!pedido.isPresent())
+			throw new RuntimeException("Pedido não encontrado");
+		
+		return pedido.get().getItens();
+		
 	}
 }

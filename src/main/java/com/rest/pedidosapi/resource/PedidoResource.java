@@ -7,12 +7,14 @@ import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
 
+import com.rest.pedidosapi.model.ItemPedido;
 import com.rest.pedidosapi.model.Pedido;
 import com.rest.pedidosapi.service.PedidoService;
 
@@ -33,9 +35,14 @@ public class PedidoResource {
 	public Pedido salvaPedido(@RequestBody @Valid Pedido pedido) {				
 		try {
 			return pedidoService.salvaPedido(pedido);
-		} catch (Exception e) {
+		} catch (RuntimeException e) {
 			throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage(), e);
 		}		
+	}
+	
+	@GetMapping("/pedido/{pedidoId}/itens") 
+	public List<ItemPedido> getPedidoItens(@PathVariable long pedidoId) {
+		return pedidoService.getPedidoItens(pedidoId);
 	}
 	
 }
