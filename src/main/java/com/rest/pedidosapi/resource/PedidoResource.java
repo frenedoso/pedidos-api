@@ -34,15 +34,34 @@ public class PedidoResource {
 	@PostMapping("/pedido")
 	public Pedido salvaPedido(@RequestBody @Valid Pedido pedido) {				
 		try {
-			return pedidoService.salvaPedido(pedido);
-		} catch (RuntimeException e) {
+			return pedidoService.salvarPedido(pedido);
+		} catch (Exception e) {
 			throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage(), e);
 		}		
+	}
+	
+	@GetMapping("/pedido/{pedidoId}")
+	public Pedido getPedidoById(@PathVariable long pedidoId) {
+		try {
+			return pedidoService.getPedido(pedidoId);
+		} catch (Exception e) {
+			throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage(), e);
+		}
 	}
 	
 	@GetMapping("/pedido/{pedidoId}/itens") 
 	public List<ItemPedido> getPedidoItens(@PathVariable long pedidoId) {
 		return pedidoService.getPedidoItens(pedidoId);
+	}
+	
+	@PostMapping("/pedido/{pedidoId}/itens")
+	public ItemPedido salveItemPedido(@RequestBody @Valid ItemPedido itemPedido, @PathVariable long pedidoId) {
+		try {
+			pedidoService.salvarItemPedido(itemPedido, pedidoId);
+		} catch (Exception e) {
+			throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage(), e);
+		}
+		return itemPedido;
 	}
 	
 }

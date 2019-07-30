@@ -16,6 +16,14 @@ public class ItemPedido {
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	private long id;
 	
+	public void setId(long id) {
+		this.id = id;
+	}
+	
+	@ManyToOne
+	@JoinColumn(name = "produto_id")
+	private Produto produto;
+		
 	public Produto getProduto() {
 		return produto;
 	}
@@ -24,19 +32,11 @@ public class ItemPedido {
 		this.produto = produto;
 	}
 
-	public void setId(long id) {
-		this.id = id;
-	}
-
-	@ManyToOne
-	@JoinColumn(name = "produto_id")
-	private Produto produto;
-
-	public BigDecimal getQuantidade() {
+	public int getQuantidade() {
 		return quantidade;
 	}
 
-	public void setQuantidade(BigDecimal quantidade) {
+	public void setQuantidade(int quantidade) {
 		this.quantidade = quantidade;
 	}
 
@@ -52,7 +52,17 @@ public class ItemPedido {
 		return id;
 	}
 
-	private BigDecimal quantidade;
+	public long getPedido_id() {
+		return pedido_id;
+	}
+
+	public void setPedido_id(long pedido_id) {
+		this.pedido_id = pedido_id;
+	}
+
+	private long pedido_id;
+
+	private int quantidade;
 	
 	private BigDecimal precoUnitario;
 }
