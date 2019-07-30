@@ -19,7 +19,13 @@ public class ClienteService {
 		return clienteRepository.findAll();
 	}
 	
-	public Optional<Cliente> getClienteById(long id) {
-		return clienteRepository.findById(id);
+	public Cliente getClienteById(long id) throws Exception {
+		Optional<Cliente> cliente = clienteRepository.findById(id);
+		
+		if (!cliente.isPresent()) {
+			throw new Exception("Cliente não encontrado");
+		}
+		
+		return cliente.get();
 	}
 }
