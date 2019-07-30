@@ -1,4 +1,4 @@
-package com.rest.pedidosapi.resources;
+package com.rest.pedidosapi.resource;
 
 import java.util.List;
 
@@ -7,19 +7,19 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.rest.pedidosapi.model.Produto;
-import com.rest.pedidosapi.repository.ProdutoRepository;
+import com.rest.pedidosapi.model.Cliente;
+import com.rest.pedidosapi.service.ClienteService;
 
 @RestController
 @RequestMapping(value="/api")
-public class ProdutoResource {
+public class ClienteResource {
 	
 	@Autowired
-	ProdutoRepository produtoRepository;
+	ClienteService clienteService;
 	
-	@GetMapping("/produtos")
-	public List<Produto> getProdutos() {
-		return produtoRepository.findAll();
+	@GetMapping("/clientes")
+	public List<Cliente> getProdutos() {
+		return clienteService.getClientes();
 	}
 
 }
