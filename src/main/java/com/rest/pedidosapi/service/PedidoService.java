@@ -40,11 +40,9 @@ public class PedidoService {
 	
 	public Pedido salvarPedido(Pedido pedido) throws Exception {
 		
-		Optional<Cliente> cliente = clienteService.getClienteById(pedido.getCliente().getId()); 
-		if (!cliente.isPresent()) {
-			throw new Exception(CLIENTE_NAO_ENCONTRADO);
-		}
-		pedido.setCliente(cliente.get());
+		Cliente cliente = clienteService.getClienteById(pedido.getCliente().getId()); 
+
+		pedido.setCliente(cliente);
 		pedidoRepository.save(pedido);
 		return pedido;
 	}
